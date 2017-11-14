@@ -4,8 +4,7 @@ category: Carrinho de Compras
 order: 1
 ---
 
-Carrinho
-O carrinho de compras permite ao usuário adicionar os itens desejados em uma compra, e é composto por uma coleção de itens de carrinho. 
+**O carrinho de compras permite** ao usuário adicionar os itens desejados em uma compra, e é composto por uma coleção de itens de carrinho. 
 
 Um [item de carrinho](/cart/cartitem/) agrega as informações do SKU, sua quantidade, preço e o método de envio. 
 
