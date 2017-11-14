@@ -8,7 +8,7 @@ author:
   email:      neto.joaobatista@gmail.com
   url:        https://imasters.com.br/
 github:
-  repo:       https://github.com/developercielo
+  repo:       https://github.com/DeveloperCielo/portaldesenvolvedores
 plugins:
   - jekyll-multiple-languages-plugin
 exclude:      ["vendor", "Gemfile*", "script"]
