@@ -1,0 +1,606 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="Jekyll v3.3.1">
+		
+		<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" href="/touch-icon.png" sizes="192x192">
+		<!-- <link rel="icon" type="image/png" href="/images/favicon.png"> -->
+		<link rel="icon" type="image/svg+xml" href="/images/squares.svg">
+
+		<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="BlackBox API" />
+		<!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>Order API - BlackBox API</title>
+<meta property="og:title" content="Order API" />
+<meta name="description" content="Pedidos são criados a partir do checkout de um carrinho de compras. Um pedido é composto por ao menos um item de pedido." />
+<meta property="og:description" content="Pedidos são criados a partir do checkout de um carrinho de compras. Um pedido é composto por ao menos um item de pedido." />
+<link rel="canonical" href="http://localhost:4000/order/order/" />
+<meta property="og:url" content="http://localhost:4000/order/order/" />
+<meta property="og:site_name" content="BlackBox API" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-09-10T23:41:43-03:00" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Order API",
+    "datePublished": "2017-09-10T23:41:43-03:00",
+    "description": "Pedidos são criados a partir do checkout de um carrinho de compras. Um pedido é composto por ao menos um item de pedido.",
+    "logo": "http://localhost:4000/siteicon.png",
+    "url": "http://localhost:4000/order/order/"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+
+		
+	</head>
+
+	<body>
+		<header>
+			<h1>
+				<a href="/" class="header-link">BlackBox API</a>	
+				<button type="button" class="open-nav" id="open-nav"></button>
+			</h1>
+
+			<form action="/search/" method="get">
+				<input type="text" name="q" id="search-input" placeholder="Buscar" autofocus>
+				<input type="submit" value="Buscar" style="display: none;">
+			</form>
+
+			<nav class="full-navigation">
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/">Visão Geral</a>
+					</li>
+				</ul>
+
+				<ul>
+					
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/auth/oauth/">Autenticação</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/auth/oauth/">Tokens de Acesso</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/cart/cart/">Carrinho de Compras</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/cart/cart/">Cart API</a></li>
+								
+									<li class="nav-item "><a href="/cart/cartitem/">Cart Item API</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/catalog/product/">Catálogo de Produtos</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/catalog/product/">Product API</a></li>
+								
+									<li class="nav-item "><a href="/catalog/sku/">SKU API</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level current">
+							
+							<a href="/order/order/">Pedidos</a>
+							<ul>
+								
+									<li class="nav-item current"><a href="/order/order/">Order API</a></li>
+								
+							</ul>
+						</li>
+					
+				</ul>
+
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/changelog/">Releases</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<section class="main">
+			<div class="page-header">
+				<!-- <h2>Pedidos</h2> -->
+				<a name="title"></a>
+				<h3>Order API</h3>
+			</div>
+			<article class="content">
+				<p>Pedidos são criados a partir do checkout de um carrinho de compras. Um pedido é composto por ao menos um item de pedido.</p>
+
+<p><a name="attributes"></a></p>
+
+<h3 id="propriedades-do-objeto">Propriedades do Objeto</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Id</td>
+      <td style="text-align: left">Identificador do pedido (gerado automaticamente).</td>
+    </tr>
+    <tr>
+      <td>CheckoutId</td>
+      <td style="text-align: left">Identificador do checkout (gerado automaticamente). Vários pedidos podem estar associados ao mesmo checkout.</td>
+    </tr>
+    <tr>
+      <td>CreatedOn</td>
+      <td style="text-align: left">Data da criação.</td>
+    </tr>
+    <tr>
+      <td>UpdatedOn</td>
+      <td style="text-align: left">Data da última atualização.</td>
+    </tr>
+    <tr>
+      <td>Status</td>
+      <td style="text-align: left">Status atual do pedido. Valores possíveis são: 0 (criado), 1 (pagamento autorizado), 2 (pagamento capturado), 5 (enviado), 10 (concluído), 20 (pagamento negado), 21 (cancelado pelo lojista) e 22 (cancelado pelo usuário).</td>
+    </tr>
+    <tr>
+      <td>MerchantId</td>
+      <td style="text-align: left">Identificador único da loja.</td>
+    </tr>
+    <tr>
+      <td>MerchantName</td>
+      <td style="text-align: left">Nome da loja (ou do vendedor).</td>
+    </tr>
+    <tr>
+      <td>Customer</td>
+      <td style="text-align: left">Dados do comprador (nome, email, cpf, id do usuário e endereço IP).</td>
+    </tr>
+    <tr>
+      <td>Shipping</td>
+      <td style="text-align: left">Dados do endereço de entrega.</td>
+    </tr>
+    <tr>
+      <td>PaymentMethod</td>
+      <td style="text-align: left">Dados do meio de pagamento.</td>
+    </tr>
+    <tr>
+      <td>Currency</td>
+      <td style="text-align: left">Código ISO 4217 da moeda utilizada no pedido.</td>
+    </tr>
+    <tr>
+      <td>Amount</td>
+      <td style="text-align: left">Valor em centavos do total do pedido.</td>
+    </tr>
+    <tr>
+      <td>Device</td>
+      <td style="text-align: left">Identificador do dispositivo acionador. Só é utilizado quando o pedido for gerado a partir de um dispositivo IoT.</td>
+    </tr>
+    <tr>
+      <td>OrderItems</td>
+      <td style="text-align: left">Coleção de itens do pedido. Um item de pedido é composto por SKU, preço e quantidade.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div title="Pedido" class="language-json-doc highlighter-rouge"><pre class="highlight"><code><span class="c1">// -------------------------</span><span class="w">
+</span><span class="c1">// Exemplo do objeto Pedido</span><span class="w">
+</span><span class="c1">// -------------------------</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"CheckoutId"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"CreatedOn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-09-10T12:03:45.5796387"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"UpdatedOn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-09-11T01:55:15.9133333"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"Code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"Label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Created"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"MerchantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"99999999-9999-9999-9999-999999999999"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"MerchantName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BlackBox Store"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Customer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"UserId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"99999999-9999-9999-9999-000000000000"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Comprador"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"Email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"comprador@blackbox.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"LegalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"096.296.777-99"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"IpAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"Shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"Type"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"Address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"Alias"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Casa"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Street"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Av. Marechal Câmara"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"160"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Complement"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sala 934"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"District"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Centro"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"City"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rio de Janeiro"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"State"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RJ"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"ZipCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"99999-999"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Brasil"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"PaymentMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"Type"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"Data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"MaskedValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100010******1000"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Brand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"visa"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"ValidThru"</span><span class="p">:</span><span class="w"> </span><span class="s2">"09/2020"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C70A7B33-9999-9999-9999-000808008888"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"Currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BRL"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">9000</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Device"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"88888888-8888-8888-8888-000000000000"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"OrderItems"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"ProductId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"SkuId"</span><span class="p">:</span><span class="w"> </span><span class="mi">9999</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"SkuDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Descrição do SKU #1 para Produto de Teste #1"</span><span class="p">,</span><span class="w"> 
+            </span><span class="nt">"Sku"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PROD9999"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">9000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Status"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><a name="http_operations"></a></p>
+
+<h3 id="operações-http">Operações HTTP</h3>
+
+<p><code class="http-get highlighter-rouge">GET</code> <a href="#getbyid_order_sent">/api/order/sent/{orderId}</a><br />
+Obtenção de um pedido enviado pelo comprador através do seu Id.</p>
+
+<p><code class="http-get highlighter-rouge">GET</code> <a href="#get_order_sent">/api/order/sent</a><br />
+Consulta dos pedidos enviados pelo comprador.</p>
+
+<p><code class="http-get highlighter-rouge">GET</code> <a href="#getbyid_order_received">/api/order/received/{orderId}</a><br />
+Obtenção de um pedido recebido pelo vendedor através do seu Id.</p>
+
+<p><code class="http-get highlighter-rouge">GET</code> <a href="#get_order_received">/api/order/received</a><br />
+Consulta dos pedidos recebidos pelo vendedor.</p>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="getbyid_order_sent"></a></p>
+
+<h3 id="get-apiordersentorderid"><strong>GET</strong> /api/order/sent/<em>{orderId}</em></h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Obtenção de um pedido enviado pelo comprador através do seu Id. O Id é gerado automaticamente quando o pedido é criado, como resultado de uma operação de checkout.</p>
+
+<p><strong>PARÂMETROS URL:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>orderId</td>
+      <td style="text-align: left">Identificador do pedido</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/api/order/sent/{orderId}</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+
+<div class="language-json-doc highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w"> 
+    </span><span class="c1">// objeto</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="get_order_sent"></a></p>
+
+<h3 id="get-apiordersent"><strong>GET</strong> /api/order/sent</h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Consulta dos pedidos enviados pelo comprador. Permite a aplicação de diversos filtros de pesquisa para maior controle sobre os resultados obtidos.</p>
+
+<p><strong>PARÂMETROS URL:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>pageIndex</td>
+      <td style="text-align: left">Índice para paginação (default: 1)</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>pageSize</td>
+      <td style="text-align: left">Quantidade de registros retornados (default: 25)</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>status</td>
+      <td style="text-align: left">Filtro por status do pedido</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>id</td>
+      <td style="text-align: left">Filtro por Id do pedido</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>checkout</td>
+      <td style="text-align: left">Filtro por Id do checkout</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>order</td>
+      <td style="text-align: left">Ordenação ascendente (asc) ou descentende (desc) dos registros retornados (default: asc)</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>startDate</td>
+      <td style="text-align: left">Filtro por data inicial no formato “dd-MM-yyyy”</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>endDate</td>
+      <td style="text-align: left">Filtro por data final no formato “dd-MM-yyyy”</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<p>Sem parâmetros de consulta:</p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/api/order/sent</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<p>Com parâmetros de consulta:</p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/api/order/sent/?pageIndex=1&amp;pageSize=25&amp;status=0&amp;checkout=500&amp;order=desc&amp;startDate=01-06-2017&amp;endDate=10-06-2017</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+
+<div class="language-json-doc highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"Total"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"PageSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"PageIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w"> </span><span class="c1">...</span><span class="w"> </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w"> </span><span class="c1">...</span><span class="w"> </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w"> </span><span class="c1">...</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="getbyid_order_received"></a></p>
+
+<h3 id="get-apiorderreceivedorderid"><strong>GET</strong> /api/order/received/<em>{orderId}</em></h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Obtenção de um pedido recebido pelo vendedor através do seu Id.</p>
+
+<p><strong>PARÂMETROS URL:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>orderId</td>
+      <td style="text-align: left">Identificador do pedido</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/api/order/received/{orderId}</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+
+<div class="language-json-doc highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w"> 
+    </span><span class="c1">// objeto</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="get_order_received"></a></p>
+
+<h3 id="get-apiorderreceived"><strong>GET</strong> /api/order/received</h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Consulta dos pedidos recebidos pelo vendedor. Permite a aplicação de diversos filtros de pesquisa para maior controle sobre os resultados obtidos.</p>
+
+<p><strong>PARÂMETROS URL:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>pageIndex</td>
+      <td style="text-align: left">Índice para paginação (default: 1)</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>pageSize</td>
+      <td style="text-align: left">Quantidade de registros retornados (default: 25)</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>status</td>
+      <td style="text-align: left">Filtro por status do pedido</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>merchantId</td>
+      <td style="text-align: left">Filtro para Identificador de loja</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">36</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>checkout</td>
+      <td style="text-align: left">Filtro por Id do checkout</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>order</td>
+      <td style="text-align: left">Ordenação ascendente (asc) ou descentende (desc) dos registros retornados (default: asc)</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>startDate</td>
+      <td style="text-align: left">Filtro por data inicial no formato “dd-MM-yyyy”</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>endDate</td>
+      <td style="text-align: left">Filtro por data final no formato “dd-MM-yyyy”</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<p>Sem parâmetros de consulta:</p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/api/order/received</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<p>Com parâmetros de consulta:</p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/api/order/received/?pageIndex=1&amp;pageSize=25&amp;merchantId=99999999-9999-9999-9999-999999999999&amp;status=0&amp;order=desc&amp;startDate=01-06-2017&amp;endDate=10-06-2017</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+
+<div class="language-json-doc highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"Total"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"PageSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"PageIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w"> </span><span class="c1">...</span><span class="w"> </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w"> </span><span class="c1">...</span><span class="w"> </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w"> </span><span class="c1">...</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<hr />
+
+			</article>
+			<div class="page-footer">
+				<span class="copyright">&copy; 2017 - Feito com <i class="material-icons copyright">favorite</i> pela <a class="copyright" href="http://www.braspag.com.br" style="font-weight: 400" target="_blank">Braspag</a></span>
+			</div>
+		</section>
+
+		<script>
+			document.getElementById("open-nav").addEventListener("click", function () {
+				document.body.classList.toggle("nav-open");
+			});
+		</script>
+	</body>
+</html>

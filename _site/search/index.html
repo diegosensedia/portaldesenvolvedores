@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="Jekyll v3.3.1">
+		
+		<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" href="/touch-icon.png" sizes="192x192">
+		<!-- <link rel="icon" type="image/png" href="/images/favicon.png"> -->
+		<link rel="icon" type="image/svg+xml" href="/images/squares.svg">
+
+		<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="BlackBox API" />
+		<!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>Busca - BlackBox API</title>
+<meta property="og:title" content="Busca" />
+<meta name="description" content="Documentação da plataforma BlackBox." />
+<meta property="og:description" content="Documentação da plataforma BlackBox." />
+<link rel="canonical" href="http://localhost:4000/search/" />
+<meta property="og:url" content="http://localhost:4000/search/" />
+<meta property="og:site_name" content="BlackBox API" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "headline": "Busca",
+    "description": "Documentação da plataforma BlackBox.",
+    "logo": "http://localhost:4000/siteicon.png",
+    "url": "http://localhost:4000/search/"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+
+		
+	</head>
+
+	<body>
+		<header>
+			<h1>
+				<a href="/" class="header-link">BlackBox API</a>	
+				<button type="button" class="open-nav" id="open-nav"></button>
+			</h1>
+
+			<form action="/search/" method="get">
+				<input type="text" name="q" id="search-input" placeholder="Buscar" autofocus>
+				<input type="submit" value="Buscar" style="display: none;">
+			</form>
+
+			<nav class="full-navigation">
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/">Visão Geral</a>
+					</li>
+				</ul>
+
+				<ul>
+					
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/auth/oauth/">Autenticação</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/auth/oauth/">Tokens de Acesso</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/cart/cart/">Carrinho de Compras</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/cart/cart/">Cart API</a></li>
+								
+									<li class="nav-item "><a href="/cart/cartitem/">Cart Item API</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/catalog/product/">Catálogo de Produtos</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/catalog/product/">Product API</a></li>
+								
+									<li class="nav-item "><a href="/catalog/sku/">SKU API</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/order/order/">Pedidos</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/order/order/">Order API</a></li>
+								
+							</ul>
+						</li>
+					
+				</ul>
+
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/changelog/">Releases</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<section class="main">
+			<div class="page-header">
+				<!-- <h2>BlackBox API</h2> -->
+				<a name="title"></a>
+				<h3>Busca</h3>
+			</div>
+			<article class="content">
+				<p><span id="search-process">Loading</span> results <span id="search-query-container" style="display: none;">for "<strong id="search-query"></strong>"</span></p>
+<ul id="search-results"></ul>
+
+<script>
+	window.data = {
+		
+			
+				
+					
+					
+
+					"auth-oauth": {
+						"id": "auth-oauth",
+						"title": "Tokens de Acesso",
+						"category": "",
+						"url": " /auth/oauth/",
+						"content": "As APIs BlackBox utilizam o protocolo padrão de mercado OAuth 2.0 para autorização de acesso a seus recursos. Este documento descreve o fluxo necessário para que aplicações cliente obtenham tokens de acesso válidos para uso na plataforma. Para saber mais sobre OAuth 2, consulte https: oauth.net 2 Obtenção do token de acesso O token de acesso é obtido através do fluxo de autorização Resource Owner Password Credentials. O diagrama a seguir ilustra, em ordem cronológica, a comunicação que se dá entre a Aplicação Cliente, o Servidor de Autorização e as APIs. O usuário, através da Aplicação Cliente, informa ao Authorization Server suas credenciais de serviço. O Authorization Server valida a credencial recebida. Se for válida, retorna o token de acesso para a Aplicação Cliente. A Aplicação Cliente informa o token de acesso obtido no cabeçalho das requisições HTTP feitas às APIs. Se o token de acesso for válido, a requisição é processada e os dados são retornados para a Aplicação Cliente. Operações HTTP POST oauth token Criação de token de acesso para as APIs BlackBox. expand_less POST oauth token DESCRIÇÃO: Criação de token de acesso para as APIs BlackBox. PARÂMETROS NO CORPO: Nome Descrição   username Nome único do SKU String 64 password Descrição do SKU String 1024 grant_type Habilita ou não o controle de estoque para o SKU Boolean REQUEST: POST oauth token HTTP 1.1 Host: {blackbox endpoint} Content-Type: application x-www-form-urlencoded Cache-Control: no-cache username={usuario}&amp;password={senha}&amp;grant_type=password RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...\", \"token_type\": \"bearer\", \"expires_in\": 86399 } expand_less"
+					}
+
+					
+				
+			
+		
+			
+				
+					,
+					
+
+					"cart-cart": {
+						"id": "cart-cart",
+						"title": "Cart API",
+						"category": "",
+						"url": " /cart/cart/",
+						"content": "O carrinho de compras permite ao usuário adicionar os itens desejados em uma compra, e é composto por uma coleção de itens de carrinho. Um item de carrinho agrega as informações do SKU, sua quantidade, preço e o método de envio. Propriedades do Objeto Nome Descrição Id Identificador único do carrinho (gerado automaticamente). CreatedOn Data da criação. UpdatedOn Data da última atualização. UserId Identificador do usuário proprietário do carrinho. Type Tipo do carrinho. Valores possíveis são: 0 (privado), 1 (público) e 2 (oferta do vendedor). MerchantId Identificador da loja. Só é utilizado quando o tipo de carrinho for uma oferta do vendedor (Type = 2). Label Nome do carrinho. CouponCode Código de cupom de desconto. CartItems Coleção de Itens de Carrinho. -------------------------------------- Exemplo do objeto Carrinho de Compras -------------------------------------- { \"Id\": 999, \"CreatedOn\": \"2017-02-11T14:10:39.1083643\", \"UpdatedOn\": \"2017-02-11T14:10:39.442996\", \"UserId\": \"7a6acd59-a7b1-4a7f-bc2d-0a3f6014cc4a\", \"Type\": 2, \"MerchantId\": \"99999999-9999-9999-9999-999999999999\", \"MerchantName\": \"BlackBox Store\", \"Label\": \"Exemplo de carrinho Oferta\", \"CartItems\": [ { \"Id\": 100, \"IsActive\": true, \"ProductId\": 9999, \"ProductName\": \"Nome do produto\", \"ManufacturerName\": \"Retail Company Inc.\", \"Caption\": \"Uma breve descrição do produto\", \"MerchantId\": \"99999999-9999-9999-9999-999999999999\", \"MerchantName\": \"BlackBox Store\", \"Quantity\": 10, \"Price\": { \"Amount\": 1000, \"Currency\": \"BRL\" }, \"Sku\": { \"Id\": 332, \"Sku\": \"SKU332\", \"Status\": 0, \"Description\": \"Descrição do SKU de Produto\", \"Images\": [ \"https: www.myimages.com image1.png\", \"https: www.myimages.com image2.png\", \"https: www.myimages.com image3.png\" ], \"Shipping\": { \"Type\": 1, \"Price\": { \"Amount\": 500, \"Currency\": \"BRL\" } } } } ] } Operações HTTP POST api cart Criação de um novo carrinho. PUT api cart {cartId} Atualização do carrinho existente. GET api cart {cartId} Obtenção de um carrinho existente através do seu Id. GET api cart Consulta dos carrinhos existentes. expand_less POST api cart DESCRIÇÃO: Criação de um novo carrinho de compras. PARÂMETROS JSON: Nome Descrição   Type Tipo do carrinho: 0 (privado), 1 (público) e 2 (oferta do vendedor) Number Label Nome do carrinho de compras String 128 MerchantId Identificador da loja. Obrigatório quando tipo do carrinho for uma oferta de vendedor (Type = 2), opcional caso contrário String 36 opcional CouponCode Código de cupom de desconto String 36 opcional CartItems Array de objetos representando itens existentes no carrinho Object opcional REQUEST: POST api cart HTTP 1.1 Content-Type: application json { \"Type\": 0, Carrinho privado \"Label\": \"Meu Carrinho de Compras\", \"CouponCode\": \"PROMOCODE\", \"CartItems\": [{ \"SkuId\": 9999, \"Quantity\": 1 }] } RESPONSE: HTTP 1.1 201 Created Content-Type: application json;charset=UTF-8 { \"Id\": 999, \"Links\": { \"self\": { \"href\": \" api cart 999\", \"method\": \"GET\" } } } expand_less PUT api cart {cartId} DESCRIÇÃO: Atualiza os atributos de um carrinho existente. PARÂMETROS URL: Nome Descrição   cartId Identificador do carrinho Number PARÂMETROS JSON: Nome Descrição   Type Tipo do carrinho: 0 (privado), 1 (público) e 2 (oferta do vendedor) Number Label Nome do carrinho de compras String 128 MerchantId Identificador da loja. Obrigatório quando tipo do carrinho for uma oferta de vendedor (Type = 2), opcional caso contrário String 36 opcional CouponCode Código de cupom de desconto String 36 opcional REQUEST: PUT api cart {cartId} HTTP 1.1 Content-Type: application json { \"Type\": 1, \"Label\": \"Meu novo Carrinho de Compras\" } RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"Id\": 9999, \"Links\": { \"self\": { \"href\": \" api product 9999\", \"method\": \"GET\" } } } expand_less GET api cart {cartId} DESCRIÇÃO: Obtém um carrinho existente através do seu Id. O Id é gerado automaticamente quando o carrinho é criado. PARÂMETROS URL: Nome Descrição   cartId Identificador do carrinho Number REQUEST: GET api cart {cartId} HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { objeto } expand_less GET api cart DESCRIÇÃO: Lista os carrinhos de compras existentes. Permite a aplicação de diversos filtros de pesquisa para maior controle sobre os resultados obtidos. PARÂMETROS URL: Nome Descrição   pageIndex Índice para paginação (default: 1) Number opcional pageSize Quantidade de registros retornados (default: 25) Number opcional cartType Filtro para tipo de carrinho Array[Number] opcional merchantId Filtro para Identificador de loja String opcional order Ordenação ascendente (asc) ou descentende (desc) dos registros retornados (default: asc) String opcional label Filtro por nome do carrinho String opcional startDate Filtro por data inicial no formato “dd-MM-yyyy” String opcional endDate Filtro por data final no formato “dd-MM-yyyy” String opcional REQUEST: Sem parâmetros de consulta: GET api cart HTTP 1.1 Content-Type: application json Com parâmetros de consulta: GET api cart ?pageIndex=1&amp;pageSize=25&amp;cartType=0&amp;label=keyword&amp;merchantId=99999999-9999-9999-9999-999999999999&amp;order=desc&amp;startDate=01-06-2017&amp;endDate=10-06-2017 HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"Total\": 100, \"PageSize\": 25, \"PageIndex\": 1, \"Data\": [ { ... }, { ... }, { ... } ] } expand_less"
+					}
+
+					
+				
+			
+		
+			
+				
+					,
+					
+
+					"cart-cartitem": {
+						"id": "cart-cartitem",
+						"title": "Cart Item API",
+						"category": "",
+						"url": " /cart/cartitem/",
+						"content": "Um item de carrinho é um SKU que foi adicionado a um carrinho de compras. Propriedades do Objeto Nome Descrição Id Identificador do item de carrinho (gerado automaticamente). IsActive Flag que indica se item pertence a lista de itens ativos. ProductId Identificador do produto. ProductName Nome do produto. MerchantId Identificador único da loja que vende o produto. MerchantName Nome da loja que vende o produto. Quantity Quantidade do item colocado no carrinho. Price Preço de venda final do produto (pode ser diferente do preço do SKU). SKU Dados do SKU do produto. ----------------------------------- Exemplo do objeto Item de Carrinho ----------------------------------- { \"Id\": 920, \"IsActive\": true, \"ProductId\": 999999, \"ProductName\": \"Produto de Teste\", \"MerchantId\": \"612a64c0-22e7-4fb9-aa2b-eb31670f207f\", \"MerchantName\": \"BlackBox Store\", \"Quantity\": 1, \"Price\": { \"Amount\": 9000, \"Currency\": \"BRL\" }, \"Sku\": { \"Id\": 9999, \"Sku\": \"PROD9999\", \"Status\": 0, \"Description\": \"Descrição do SKU\", \"Images\": [ \"http: www.myimages.com image1.png\" ] } } Operações HTTP POST api cart {cartId} items Inclusão de item no carrinho. PUT api cart {cartId} items {itemId} Atualização dos dados de um item do carrinho. DELETE api cart {cartId} items {itemId} Remoção de item do carrinho. GET api cart {cartId} items {itemId} Obtenção de item existente no carrinho através do seu Id. GET api cart {cartId} items Listagem dos itens existentes no carrinho. GET api cart {cartId} active Listagem dos itens ativos do carrinho. GET api cart {cartId} saved Listagem dos itens salvos do carrinho. expand_less POST api cart {cartId} items DESCRIÇÃO: Inclusão de item no carrinho. PARÂMETROS URL: Nome Descrição   cartId Identificador do carrinho Number PARÂMETROS JSON: Nome Descrição   SkuId Identificador do SKU Number Quantity Quantidade do SKU a ser incluída no carrinho Number Price.Amount Preço do SKU no carrinho. Se não for informado, o preço já cadastrado no SKU é utilizado Number opcional REQUEST: POST api cart {cartId} items HTTP 1.1 Content-Type: application json { \"SkuId\": 999999, \"Quantity\": 1, Price é opcional Quando utilizado, substitui o preço cadastrado no SKU \"Price\": { \"Amount\": 100 } } RESPONSE: HTTP 1.1 201 Created Content-Type: application json;charset=UTF-8 { \"Id\": 999999, \"Links\": { \"self\": { \"href\": \" api cart {cartId} items 999999\", \"method\": \"GET\" } } } expand_less PUT api cart {cartId} items {itemId} DESCRIÇÃO: Atualização de item no carrinho. PARÂMETROS URL: Nome Descrição   cartId Identificador do carrinho Number itemId Identificador do item de carrinho Number PARÂMETROS JSON: Nome Descrição   Quantity Quantidade do SKU a ser incluída no carrinho Number REQUEST: PUT api cart {cartId} items {itemId} HTTP 1.1 Content-Type: application json { \"Quantity\": 2 } RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"Id\": 999999, \"Links\": { \"self\": { \"href\": \" api cart {cartId} items 999999\", \"method\": \"GET\" } } } expand_less DELETE api cart {cartId} items {itemId} DESCRIÇÃO: Remoção de item do carrinho. PARÂMETROS URL: Nome Descrição   cartId Identificador do carrinho Number itemId Identificador do item de carrinho Number REQUEST: DELETE api cart {cartId} items {itemId} HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"Links\": { \"add\": { \"href\": \" api cart {cartId} items \", \"method\": \"POST\" }, \"cart\": { \"href\": \" api cart {cartId}\", \"method\": \"GET\" }, \"cart-items\": { \"href\": \" api cart {cartId} items \", \"method\": \"GET\" } } } expand_less GET api cart {cartId} items {itemId} DESCRIÇÃO: Obtém um item existente no carrinho através do seu Id. O Id é gerado automaticamente quando o item é adicionado ao carrinho. PARÂMETROS URL: Nome Descrição   cartId Identificador do carrinho Number itemId Identificador do item de carrinho Number REQUEST: GET api cart {cartId} items {itemId} HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { objeto } expand_less GET api cart {cartId} items DESCRIÇÃO: Lista os itens existentes no carrinho. PARÂMETROS URL: Nome Descrição   cartId Identificador do carrinho Number REQUEST: GET api cart {cartId} items HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 [ { ... }, { ... }, { ... } ] expand_less GET api cart {cartId} active DESCRIÇÃO: Listagem dos itens ativos do carrinho. PARÂMETROS URL: Nome Descrição   cartId Identificador do carrinho Number REQUEST: GET api cart {cartId} active HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 [ { ... }, { ... }, { ... } ] expand_less GET api cart {cartId} saved DESCRIÇÃO: Listagem dos itens salvos do carrinho. PARÂMETROS URL: Nome Descrição   cartId Identificador do carrinho Number REQUEST: GET api cart {cartId} saved HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 [ { ... }, { ... }, { ... } ] expand_less"
+					}
+
+					
+				
+			
+		
+			
+				
+					,
+					
+
+					"catalog-product": {
+						"id": "catalog-product",
+						"title": "Product API",
+						"category": "",
+						"url": " /catalog/product/",
+						"content": "Permite gerenciar os produtos do catálogo da loja. Cada produto possui uma coleção de SKUs. Propriedades do Objeto Nome Descrição Id Identificador único do produto (gerado automaticamente). CreatedOn Data da criação. UpdatedOn Data da última atualização. MerchantId Identificador único da loja. Name Nome do produto. Description Descrição detalhada do produto. Caption Descrição curta do produto. Status Status atual do produto. Valores possíveis são: 0 (ativo), 10 (publicado) e 20 (descontinuado). DefaultSku SKU padrão para exibição do produto. Manufacturer Fabricante do produto. Attributes Coleção com os nomes dos atributos utilizados para descrever os SKUs do produto. Os nomes são case sensitive. Metadata Conjunto de pares chave-valor para armazenar informações adicionais sobre o produto. SKUs Coleção de SKUs do produto. ------------------------- Exemplo do objeto Produto ------------------------- { \"Id\": 9999, \"CreatedOn\": \"2017-01-23T09:44:13.3466667\", formato UTC \"UpdatedOn\": \"2017-01-23T09:44:13.3466667\", \"MerchantId\": \"99999999-9999-9999-9999-999999999999\", \"MerchantName\": \"BlackBox Store\", \"Name\": \"Nome do produto\", \"Caption\": \"Uma breve descrição do produto\", \"Description\": \"Descrição mais detalhada do produto\", \"Status\": 10, 0 (ativo), 10 (publicado) e 20 (descontinuado) \"DefaultSku\": \"PROD9999\", nome do SKU padrão \"Metadata\": { \"id-local\": \"101020\", \"categoria\": \"utilidades\" }, \"Attributes\": [\"Cor\", \"Tamanho\"], case sensitive \"Manufacturer\": { \"Name\": \"Fabricante do produto\", \"Warranty\": 12, meses \"Model\": \"MODEL0001\" }, \"Skus\": [ { \"Id\": 9999999, \"Sku\": \"PROD9999\", \"UpdatedOn\": \"2017-01-23T09:44:15.16\", \"Description\": \"Descrição do item\", \"Status\": 0, \"Inventory\": { \"UpdatedOn\": \"2017-08-26T21:05:25.22\", \"Enabled\": true, \"Quantity\": 100 }, \"Dimensions\": { \"Weight\": 1.0, gramas \"Height\": 2.5, centímetros \"Lenght\": 2.5, centímetros \"Width\": 10 centímetros }, \"Barcode\": \"4006381333930\", Código de barras do SKU \"BarcodeType\": 13, EAN-13 \"Images\": [ \"https: www.myimages.com image1.png\", \"https: www.myimages.com image2.png\", \"https: www.myimages.com image3.png\" ], \"Attributes\": { \"Cor\": \"vermelho\", \"Tamanho\": \"médio\" }, \"Price\": { \"UpdatedOn\": \"2017-08-26T21:05:25.21\", \"Amount\": 9000, valor em centavos \"Currency\": \"BRL\" código ISO 4217 } } ] } Operações HTTP POST api product Inclusão de um produto no catálogo. PUT api product {productId} Atualização de um produto existente no catálogo. PUT api product {productId} publish Publicação de um produto existente no catálogo. DELETE api product {productId} Remoção (descontinuação) de um produto. GET api product {productId} Obtenção de um produto existente no catálogo através do seu Id. GET api product Consulta dos produtos existentes no catálogo. expand_less POST api product DESCRIÇÃO: Adiciona novos produtos no catálogo do vendedor. PARÂMETROS JSON: Nome Descrição   Name Nome do produto String 256 Description Descrição detalhada do produto String 1024 Caption Descrição curta do produto String 128 opcional MerchantId Identificador de loja em formato GUID String 36 Manufacturer.Name Nome do fabricante String 64 opcional Manufacturer.Model Modelo do produto String 64 opcional Manufacturer.Warranty Garantia do produto (em meses) Number opcional Attributes Array com os nomes dos atributos que descrevem os SKUs do produto. Os nomes são case sensitive. Object opcional Metadata Dados extras relacionados produto Object opcional DefaultSku SKU padrão para exibição do produto String 64 opcional REQUEST: POST api product HTTP 1.1 Content-Type: application json { \"MerchantId\": \"99999999-9999-9999-9999-999999999999\", \"Name\": \"Nome do produto\", \"Caption\": \"Uma breve descrição do produto\", \"Description\": \"Descrição mais detalhada do produto\", \"Manufacturer\": { \"Name\": \"Fabricante do produto\", \"Warranty\": 12, meses \"Model\": \"MODEL0001\" }, \"Attributes\": [\"Cor\", \"Tamanho\"], \"Metadata\": { \"id-local\": \"101020\", \"categoria\": \"utilidades\" } } RESPONSE: HTTP 1.1 201 Created Content-Type: application json;charset=UTF-8 { \"Id\": 9999, \"Links\": { \"self\": { \"href\": \" api product 9999\", \"method\": \"GET\" } } } expand_less PUT api product {productId} DESCRIÇÃO: Atualiza atributos de um produto existente no catálogo do vendedor. PARÂMETROS URL: Nome Descrição   productId Identificador do produto Number PARÂMETROS JSON: Nome Descrição   Name Nome do produto String 256 Description Descrição detalhada do produto String 1024 Caption Descrição curta do produto String 128 opcional Manufacturer.Name Nome do fabricante String 64 opcional Manufacturer.Model Modelo do produto String 64 opcional Manufacturer.Warranty Garantia do produto (em meses) Number opcional Attributes Array com nomes (case sensitive) dos atributos que descrevem os SKUs do produto. Object opcional Metadata Dados extras relacionados produto Object opcional DefaultSku SKU padrão para exibição do produto String 64 opcional Atenção: atributos opcionais como Caption e Manufacturer, se definidos na operação POST e não informados na operação PUT, serão apagados. REQUEST: PUT api product {productId} HTTP 1.1 Content-Type: application json { \"Name\": \"Nome do produto\", \"Description\": \"Descrição do produto\", \"Caption\": \"Uma breve descrição do produto\", \"DefaultSku\": \"PROD9999\", \"Metadata\": { \"id-local\": \"101020\", \"categoria\": \"utilidades\" }, \"Manufacturer\": { \"Name\": \"Fabricante do produto\", \"Warranty\": 12, \"Model\": \"MODEL0001\" }, \"Attributes\": [] } RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"Id\": 9999, \"Links\": { \"self\": { \"href\": \" api product 9999\", \"method\": \"GET\" } } } expand_less PUT api product {productId} publish DESCRIÇÃO: Realiza a publicação de um produto existente no catálogo. Para ser publicável, um produto precisa ter ao menos um SKU cadastrado. Quando publicado, o produto se habilita para inclusão em um carrinho de compras. PARÂMETROS URL: Nome Descrição   productId Identificador do produto Number REQUEST: PUT api product {productId} publish HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"Id\": 9999, \"Links\": { \"self\": { \"href\": \" api product 9999\", \"method\": \"GET\" } } } expand_less DELETE api product {productId} DESCRIÇÃO: Remoção (descontinuação) de um produto. Ao remover um produto, o mesmo não pode mais ser adicionado a um carrinho e todos os seus SKUs são marcados como inativos. PARÂMETROS URL: Nome Descrição   productId Identificador do produto Number REQUEST: DELETE api product {productId} HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"Id\": 9999, \"Links\": { \"self\": { \"href\": \" api product 9999\", \"method\": \"GET\" } } } expand_less GET api product {productId} DESCRIÇÃO: Obtém um produto existente no catálogo através do seu Id. O Id é gerado automaticamente quando o produto é adicionado ao catálogo. PARÂMETROS URL: Nome Descrição   productId Identificador do produto Number REQUEST: GET api product {productId} HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { objeto } expand_less GET api product DESCRIÇÃO: Lista os produtos existentes no catálogo do vendedor. Permite a aplicação de diversos filtros de pesquisa para maior controle sobre os resultados obtidos. PARÂMETROS URL: Nome Descrição   pageIndex Índice para paginação (default: 1) Number opcional pageSize Quantidade de registros retornados (default: 25) Number opcional merchantId Filtro para Identificador de loja String opcional order Ordenação ascendente (asc) ou descentende (desc) dos registros retornados (default: asc) String opcional startDate Filtro por data inicial no formato “dd-MM-yyyy” String opcional endDate Filtro por data final no formato “dd-MM-yyyy” String opcional REQUEST: Sem parâmetros de consulta: GET api product HTTP 1.1 Content-Type: application json Com parâmetros de consulta: GET api product ?pageIndex=1&amp;pageSize=25&amp;merchantId=99999999-9999-9999-9999-999999999999&amp;order=desc&amp;startDate=01-06-2017&amp;endDate=10-06-2017 HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"Total\": 100, \"PageSize\": 25, \"PageIndex\": 1, \"Data\": [ { ... }, { ... }, { ... } ] } expand_less"
+					}
+
+					
+				
+			
+		
+			
+				
+					,
+					
+
+					"catalog-sku": {
+						"id": "catalog-sku",
+						"title": "SKU API",
+						"category": "",
+						"url": " /catalog/sku/",
+						"content": "SKUs, ou Stock Keeping Units, representam variações específicas de um produto existente no catálogo. Um produto pode possuir diversas características variáveis, como por exemplo: cor, capacidade ou tamanho. SKUs distintos de um mesmo produto podem diferir não apenas em suas qualidades, mas também no preço e no controle de estoque. Propriedades do Objeto Nome Descrição Id Identificador do SKU (gerado automaticamente). UpdatedOn Data da última atualização. Sku Nome do SKU. Deve ser único no contexto de uma loja. Status Status atual do SKU. Valores possíveis são: 0 (ativo) e 1 (inativo). SKUs inativos não podem ser incluídos em carrinhos e não são considerados durante o processamento de um pedido. Description Descrição do SKU. Images Array com até 8 URLs de imagens para ilustrar o SKU. As URLs precisam obrigatóriamente serem disponibilizadas via HTTPS. Attributes Conjunto de pares chave-valor para armazenar até 5 atributos ao SKU. Inventory Gestão de estoque do SKU. Dimensions Dimensões do SKU: peso do item em gramas; altura, comprimento. e largura em centímetros. Barcode Código de barras do SKU. BarcodeType Tipo de representação de código de barras utilizado. Valores possíveis são: 8 (EAN-8), 13 (EAN-13), 20 (UPC-A) e 24 (UPC-E). Price Preço do SKU, representado através do seu valor em centavos e do código ISO 4217 da moeda escolhida. ------------------------- Exemplo do objeto SKU ------------------------- { \"Id\": 9999999, \"Sku\": \"PROD9999\", \"UpdatedOn\": \"2017-01-23T09:44:15.16\", formato UTC \"Description\": \"Descrição do item\", \"Status\": 0, 0 (Ativo), 1 (Inativo) \"Inventory\": { \"UpdatedOn\": \"2017-08-26T21:05:25.2166667\", \"IsEnabled\": true, Habilita o controle de estoque para o SKU \"Quantity\": 100, }, \"Dimensions\": { \"Weight\": 1.0, gramas \"Height\": 2.5, centímetros \"Lenght\": 2.5, centímetros \"Width\": 10 centímetros }, \"Barcode\": \"4006381333930\", Código de barras do SKU \"BarcodeType\": 13, Representação EAN-13 \"Images\": [ utilize endpoints seguros (HTTPS) \"https: www.myimages.com image1.png\", \"https: www.myimages.com image2.png\", \"https: www.myimages.com image3.png\" ], \"Attributes\": { \"Cor\": \"vermelho\", \"Tamanho\": \"médio\" }, \"Price\": { \"UpdatedOn\": \"2017-08-26T21:05:25.21\", valor em centavos exemplo: 1,00 =&gt; 100 \"Amount\": 9000, código ISO 4217 exemplo: BRL, USD, EUR \"Currency\": \"BRL\" } } Operações HTTP POST api product {productId} sku Criação de SKU para o produto {productId}. PUT api product {productId} sku {skuId} Atualização de SKU {skuId} para o produto {productId}. PUT api product {productId} sku {skuId} inventory Atualização de estoque para o SKU {skuId} do produto {productId}. PUT api product {productId} sku {skuId} price Atualização do preço do SKU {skuId}. DELETE api product {productId} sku {skuId} Remoção (inativação) de um SKU. GET api product {productId} sku {skuId} Obtenção de SKU do produto {productId} por Id. GET api product {productId} sku {skuId} inventory Obtenção de estoque do SKU {skuId}. GET api product {productId} sku {skuId} price Obtenção do preço do SKU {skuId}. GET api product {productId} sku Listagem dos SKUs do produto {productId}. expand_less POST api product {productId} sku DESCRIÇÃO: Criação de novo SKU para o produto. PARÂMETROS URL: Nome Descrição   productId Identificador do produto Number PARÂMETROS JSON: Nome Descrição   Sku Nome único do SKU String 64 Description Descrição do SKU String 1024 Inventory.IsEnabled Habilita ou não o controle de estoque para o SKU Boolean Inventory.Quantity Quantidade de itens disponíveis no inventório Number 0-1000000 Images Array com até 8 URLs de imagens para ilustrar o SKU Object opcional Attributes Conjunto de pares chave-valor para armazenar até 5 atributos ao SKU Object opcional Price.Currency Código ISO 4217 da moeda String 3 Price.Amount Valor em centavos do preço de venda Number Barcode Código de barras do SKU String 16 opcional BarcodeType Tipo de representação de código de barras Number opcional REQUEST: POST api product {productId} sku HTTP 1.1 Content-Type: application json { \"Sku\": \"PROD9999\", \"Description\": \"Descrição do SKU de Produto\", \"Inventory\": { \"IsEnabled\": true, Habilita o controle de estoque para o SKU \"Quantity\": 100 }, \"Dimensions\": { \"Weight\": 1.0, \"Height\": 2.5, \"Lenght\": 2.5, \"Width\": 10 }, \"Barcode\": \"4006381333930\", \"BarcodeType\": 13, \"Images\": [ \"https: www.myimages.com image1.png\", \"https: www.myimages.com image2.png\", \"https: www.myimages.com image3.png\" ], \"Attributes\": { \"Cor\": \"vermelho\", \"Tamanho\": \"médio\" }, \"Price\": { \"Currency\": \"BRL\", \"Amount\" : 9000 } } RESPONSE: HTTP 1.1 201 Created Content-Type: application json;charset=UTF-8 { \"Id\": 9999999, \"Links\": { \"self\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"GET\" }, \"inventory\": { \"href\": \" api product 9999 sku 9999999 inventory\", \"method\": \"GET\" }, \"price\": { \"href\": \" api product 9999 sku 9999999 price\", \"method\": \"GET\" }, \"all\": { \"href\": \" api product 9999 sku\", \"method\": \"GET\" }, \"update\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"PUT\" }, \"delete\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"DELETE\" } } } expand_less PUT api product {productId} sku {skuId} DESCRIÇÃO: Atualização de SKU do produto. PARÂMETROS URL: Nome Descrição   productId Identificador do produto Number skuId Identificador do SKU Number PARÂMETROS JSON: Nome Descrição   Sku Nome único do SKU String 64 Description Descrição do SKU String 1024 Images Array com até 8 URLs de imagens para ilustrar o SKU Object opcional Attributes Conjunto de pares chave-valor para armazenar até 5 atributos ao SKU Object opcional Barcode Código de barras do SKU String 16 opcional BarcodeType Tipo de representação de código de barras Number opcional REQUEST: PUT api product {productId} sku {skuId} HTTP 1.1 Content-Type: application json { \"Description\": \"Nova descrição do SKU de Produto\", \"Dimensions\": { \"Weight\": 1.0, \"Height\": 2.5, \"Lenght\": null, \"Width\": 10 }, \"Barcode\": null, \"BarcodeType\": null, \"Attributes\": { \"Cor\": \"verde\", \"Tamanho\": \"grande\" } } RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"Id\": 9999999, \"Links\": { \"self\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"GET\" }, \"inventory\": { \"href\": \" api product 9999 sku 9999999 inventory\", \"method\": \"GET\" }, \"price\": { \"href\": \" api product 9999 sku 9999999 price\", \"method\": \"GET\" }, \"all\": { \"href\": \" api product 9999 sku\", \"method\": \"GET\" }, \"update\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"PUT\" }, \"delete\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"DELETE\" } } } expand_less PUT api product {productId} sku {skuId} inventory DESCRIÇÃO: Atualização de estoque do SKU. PARÂMETROS URL: Nome Descrição   productId Identificador do produto Number skuId Identificador do SKU Number PARÂMETROS JSON: Nome Descrição   IsEnabled Habilita ou não o controle de estoque para o SKU Boolean Quantity Quantidade de itens disponíveis no inventório Number 0-1000000 REQUEST: PUT api product {productId} sku {skuId} inventory HTTP 1.1 Content-Type: application json { \"IsEnabled\": true, \"Quantity\": 100 } RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"Id\": 9999999, \"Links\": { \"self\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"GET\" }, \"inventory\": { \"href\": \" api product 9999 sku 9999999 inventory\", \"method\": \"GET\" }, \"price\": { \"href\": \" api product 9999 sku 9999999 price\", \"method\": \"GET\" }, \"all\": { \"href\": \" api product 9999 sku\", \"method\": \"GET\" }, \"update\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"PUT\" }, \"delete\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"DELETE\" } } } expand_less PUT api product {productId} sku {skuId} price DESCRIÇÃO: Atualização do preço do SKU. PARÂMETROS URL: Nome Descrição   productId Identificador do produto Number skuId Identificador do SKU Number PARÂMETROS JSON: Nome Descrição   Amount Valor em centavos do preço de venda Number Currency Código ISO 4217 da moeda String 3 REQUEST: PUT api product {productId} sku {skuId} price HTTP 1.1 Content-Type: application json { \"Amount\": 10000, \"Currency\": \"BRL\" } RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"Id\": 9999999, \"Links\": { \"self\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"GET\" }, \"inventory\": { \"href\": \" api product 9999 sku 9999999 inventory\", \"method\": \"GET\" }, \"price\": { \"href\": \" api product 9999 sku 9999999 price\", \"method\": \"GET\" }, \"all\": { \"href\": \" api product 9999 sku\", \"method\": \"GET\" }, \"update\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"PUT\" }, \"delete\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"DELETE\" } } } expand_less DELETE api product {productId} sku {skuId} DESCRIÇÃO: Remoção (inativação) de um SKU. Ao ser inativado, um SKU não pode mais ser adicionado a um carrinho. PARÂMETROS URL: Nome Descrição   productId Identificador do produto Number skuId Identificador do SKU Number REQUEST: DELETE api product {productId} sku {skuId} HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"Id\": 9999999, \"Links\": { \"self\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"GET\" }, \"inventory\": { \"href\": \" api product 9999 sku 9999999 inventory\", \"method\": \"GET\" }, \"price\": { \"href\": \" api product 9999 sku 9999999 price\", \"method\": \"GET\" }, \"all\": { \"href\": \" api product 9999 sku\", \"method\": \"GET\" }, \"update\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"PUT\" }, \"delete\": { \"href\": \" api product 9999 sku 9999999\", \"method\": \"DELETE\" } } } expand_less GET api product {productId} sku {skuId} DESCRIÇÃO: Obtenção de SKU por Id. PARÂMETROS URL: Nome Descrição   productId Identificador do produto Number skuId Identificador do SKU Number REQUEST: GET api product {productId} sku {skuId} HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { objeto } expand_less GET api product {productId} sku {skuId} inventory DESCRIÇÃO: Obtenção de estoque do SKU. PARÂMETROS URL: Nome Descrição   productId Identificador do produto Number skuId Identificador do SKU Number REQUEST: GET api product {productId} sku {skuId} inventory HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"UpdatedOn\": \"2017-08-27T18:19:55.2023038\", última atualização em formato UTC \"IsEnabled\": true, \"Quantity\": 100 } expand_less GET api product {productId} sku {skuId} price DESCRIÇÃO: Obtenção do preço do SKU. PARÂMETROS URL: Nome Descrição   productId Identificador do produto Number skuId Identificador do SKU Number REQUEST: GET api product {productId} sku {skuId} price HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"UpdatedOn\": \"2017-08-27T18:27:39.1055263\", última atualização em formato UTC \"Amount\": 10000, \"Currency\": \"BRL\" } expand_less GET api product {productId} sku DESCRIÇÃO: Lista os SKUs existentes no produto. REQUEST: GET api product {productId} sku HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 [ { ... }, { ... }, { ... } ] expand_less"
+					}
+
+					
+				
+			
+		
+			
+				
+					,
+					
+
+					"order-order": {
+						"id": "order-order",
+						"title": "Order API",
+						"category": "",
+						"url": " /order/order/",
+						"content": "Pedidos são criados a partir do checkout de um carrinho de compras. Um pedido é composto por ao menos um item de pedido. Propriedades do Objeto Nome Descrição Id Identificador do pedido (gerado automaticamente). CheckoutId Identificador do checkout (gerado automaticamente). Vários pedidos podem estar associados ao mesmo checkout. CreatedOn Data da criação. UpdatedOn Data da última atualização. Status Status atual do pedido. Valores possíveis são: 0 (criado), 1 (pagamento autorizado), 2 (pagamento capturado), 5 (enviado), 10 (concluído), 20 (pagamento negado), 21 (cancelado pelo lojista) e 22 (cancelado pelo usuário). MerchantId Identificador único da loja. MerchantName Nome da loja (ou do vendedor). Customer Dados do comprador (nome, email, cpf, id do usuário e endereço IP). Shipping Dados do endereço de entrega. PaymentMethod Dados do meio de pagamento. Currency Código ISO 4217 da moeda utilizada no pedido. Amount Valor em centavos do total do pedido. Device Identificador do dispositivo acionador. Só é utilizado quando o pedido for gerado a partir de um dispositivo IoT. OrderItems Coleção de itens do pedido. Um item de pedido é composto por SKU, preço e quantidade. ------------------------- Exemplo do objeto Pedido ------------------------- { \"Id\": 100, \"CheckoutId\": 500, \"CreatedOn\": \"2017-09-10T12:03:45.5796387\", \"UpdatedOn\": \"2017-09-11T01:55:15.9133333\", \"Status\": { \"Code\": 0, \"Label\": \"Created\" }, \"MerchantId\": \"99999999-9999-9999-9999-999999999999\", \"MerchantName\": \"BlackBox Store\", \"Customer\": { \"UserId\": \"99999999-9999-9999-9999-000000000000\", \"Name\": \"Comprador\", \"Email\": \"comprador@blackbox.com\", \"LegalId\": \"096.296.777-99\", \"IpAddress\": \"127.0.0.1\" }, \"Shipping\": { \"Type\": 0, \"Address\": { \"Alias\": \"Casa\", \"Street\": \"Av. Marechal Câmara\", \"Number\": \"160\", \"Complement\": \"Sala 934\", \"District\": \"Centro\", \"City\": \"Rio de Janeiro\", \"State\": \"RJ\", \"ZipCode\": \"99999-999\", \"Country\": \"Brasil\" } }, \"PaymentMethod\": { \"Id\": 500, \"Type\": 0, \"Data\": { \"MaskedValue\": \"100010******1000\", \"Brand\": \"visa\", \"ValidThru\": \"09 2020\", \"Token\": \"C70A7B33-9999-9999-9999-000808008888\" } }, \"Currency\": \"BRL\", \"Amount\": 9000, \"Device\": { \"Id\": \"88888888-8888-8888-8888-000000000000\" }, \"OrderItems\": [ { \"Id\": 10, \"ProductId\": 1, \"SkuId\": 9999, \"SkuDescription\": \"Descrição do SKU #1 para Produto de Teste #1\", \"Sku\": \"PROD9999\", \"Amount\": 9000, \"Quantity\": 2, \"Status\": 0 } ] } Operações HTTP GET api order sent {orderId} Obtenção de um pedido enviado pelo comprador através do seu Id. GET api order sent Consulta dos pedidos enviados pelo comprador. GET api order received {orderId} Obtenção de um pedido recebido pelo vendedor através do seu Id. GET api order received Consulta dos pedidos recebidos pelo vendedor. expand_less GET api order sent {orderId} DESCRIÇÃO: Obtenção de um pedido enviado pelo comprador através do seu Id. O Id é gerado automaticamente quando o pedido é criado, como resultado de uma operação de checkout. PARÂMETROS URL: Nome Descrição   orderId Identificador do pedido Number REQUEST: GET api order sent {orderId} HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { objeto } expand_less GET api order sent DESCRIÇÃO: Consulta dos pedidos enviados pelo comprador. Permite a aplicação de diversos filtros de pesquisa para maior controle sobre os resultados obtidos. PARÂMETROS URL: Nome Descrição   pageIndex Índice para paginação (default: 1) Number opcional pageSize Quantidade de registros retornados (default: 25) Number opcional status Filtro por status do pedido Number opcional id Filtro por Id do pedido Number opcional checkout Filtro por Id do checkout Number opcional order Ordenação ascendente (asc) ou descentende (desc) dos registros retornados (default: asc) String opcional startDate Filtro por data inicial no formato “dd-MM-yyyy” String opcional endDate Filtro por data final no formato “dd-MM-yyyy” String opcional REQUEST: Sem parâmetros de consulta: GET api order sent HTTP 1.1 Content-Type: application json Com parâmetros de consulta: GET api order sent ?pageIndex=1&amp;pageSize=25&amp;status=0&amp;checkout=500&amp;order=desc&amp;startDate=01-06-2017&amp;endDate=10-06-2017 HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"Total\": 100, \"PageSize\": 25, \"PageIndex\": 1, \"Data\": [ { ... }, { ... }, { ... } ] } expand_less GET api order received {orderId} DESCRIÇÃO: Obtenção de um pedido recebido pelo vendedor através do seu Id. PARÂMETROS URL: Nome Descrição   orderId Identificador do pedido Number REQUEST: GET api order received {orderId} HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { objeto } expand_less GET api order received DESCRIÇÃO: Consulta dos pedidos recebidos pelo vendedor. Permite a aplicação de diversos filtros de pesquisa para maior controle sobre os resultados obtidos. PARÂMETROS URL: Nome Descrição   pageIndex Índice para paginação (default: 1) Number opcional pageSize Quantidade de registros retornados (default: 25) Number opcional status Filtro por status do pedido Number opcional merchantId Filtro para Identificador de loja String 36 opcional checkout Filtro por Id do checkout Number opcional order Ordenação ascendente (asc) ou descentende (desc) dos registros retornados (default: asc) String opcional startDate Filtro por data inicial no formato “dd-MM-yyyy” String opcional endDate Filtro por data final no formato “dd-MM-yyyy” String opcional REQUEST: Sem parâmetros de consulta: GET api order received HTTP 1.1 Content-Type: application json Com parâmetros de consulta: GET api order received ?pageIndex=1&amp;pageSize=25&amp;merchantId=99999999-9999-9999-9999-999999999999&amp;status=0&amp;order=desc&amp;startDate=01-06-2017&amp;endDate=10-06-2017 HTTP 1.1 Content-Type: application json RESPONSE: HTTP 1.1 200 OK Content-Type: application json;charset=UTF-8 { \"Total\": 100, \"PageSize\": 25, \"PageIndex\": 1, \"Data\": [ { ... }, { ... }, { ... } ] } expand_less"
+					}
+
+					
+				
+			
+		
+	};
+</script>
+<script src="/scripts/lunr.min.js"></script>
+<script src="/scripts/search.js"></script>
+
+			</article>
+			<div class="page-footer">
+				<span class="copyright">&copy; 2017 - Feito com <i class="material-icons copyright">favorite</i> pela <a class="copyright" href="http://www.braspag.com.br" style="font-weight: 400" target="_blank">Braspag</a></span>
+			</div>
+		</section>
+
+		<script>
+			document.getElementById("open-nav").addEventListener("click", function () {
+				document.body.classList.toggle("nav-open");
+			});
+		</script>
+	</body>
+</html>

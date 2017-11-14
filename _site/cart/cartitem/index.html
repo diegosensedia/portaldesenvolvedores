@@ -1,0 +1,711 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="Jekyll v3.3.1">
+		
+		<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" href="/touch-icon.png" sizes="192x192">
+		<!-- <link rel="icon" type="image/png" href="/images/favicon.png"> -->
+		<link rel="icon" type="image/svg+xml" href="/images/squares.svg">
+
+		<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="BlackBox API" />
+		<!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>Cart Item API - BlackBox API</title>
+<meta property="og:title" content="Cart Item API" />
+<meta name="description" content="Um item de carrinho é um SKU que foi adicionado a um carrinho de compras." />
+<meta property="og:description" content="Um item de carrinho é um SKU que foi adicionado a um carrinho de compras." />
+<link rel="canonical" href="http://localhost:4000/cart/cartitem/" />
+<meta property="og:url" content="http://localhost:4000/cart/cartitem/" />
+<meta property="og:site_name" content="BlackBox API" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-09-10T23:41:43-03:00" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Cart Item API",
+    "datePublished": "2017-09-10T23:41:43-03:00",
+    "description": "Um item de carrinho é um SKU que foi adicionado a um carrinho de compras.",
+    "logo": "http://localhost:4000/siteicon.png",
+    "url": "http://localhost:4000/cart/cartitem/"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+
+		
+	</head>
+
+	<body>
+		<header>
+			<h1>
+				<a href="/" class="header-link">BlackBox API</a>	
+				<button type="button" class="open-nav" id="open-nav"></button>
+			</h1>
+
+			<form action="/search/" method="get">
+				<input type="text" name="q" id="search-input" placeholder="Buscar" autofocus>
+				<input type="submit" value="Buscar" style="display: none;">
+			</form>
+
+			<nav class="full-navigation">
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/">Visão Geral</a>
+					</li>
+				</ul>
+
+				<ul>
+					
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/auth/oauth/">Autenticação</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/auth/oauth/">Tokens de Acesso</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level current">
+							
+							<a href="/cart/cart/">Carrinho de Compras</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/cart/cart/">Cart API</a></li>
+								
+									<li class="nav-item current"><a href="/cart/cartitem/">Cart Item API</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/catalog/product/">Catálogo de Produtos</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/catalog/product/">Product API</a></li>
+								
+									<li class="nav-item "><a href="/catalog/sku/">SKU API</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/order/order/">Pedidos</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/order/order/">Order API</a></li>
+								
+							</ul>
+						</li>
+					
+				</ul>
+
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/changelog/">Releases</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<section class="main">
+			<div class="page-header">
+				<!-- <h2>Carrinho de Compras</h2> -->
+				<a name="title"></a>
+				<h3>Cart Item API</h3>
+			</div>
+			<article class="content">
+				<p>Um item de carrinho é um <a href="/catalog/sku/">SKU</a> que foi adicionado a um <a href="/cart/cart/">carrinho de compras</a>.</p>
+
+<p><a name="attributes"></a></p>
+
+<h3 id="propriedades-do-objeto">Propriedades do Objeto</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Id</td>
+      <td style="text-align: left">Identificador do item de carrinho (gerado automaticamente).</td>
+    </tr>
+    <tr>
+      <td>IsActive</td>
+      <td style="text-align: left">Flag que indica se item pertence a lista de itens ativos.</td>
+    </tr>
+    <tr>
+      <td>ProductId</td>
+      <td style="text-align: left">Identificador do produto.</td>
+    </tr>
+    <tr>
+      <td>ProductName</td>
+      <td style="text-align: left">Nome do produto.</td>
+    </tr>
+    <tr>
+      <td>MerchantId</td>
+      <td style="text-align: left">Identificador único da loja que vende o produto.</td>
+    </tr>
+    <tr>
+      <td>MerchantName</td>
+      <td style="text-align: left">Nome da loja que vende o produto.</td>
+    </tr>
+    <tr>
+      <td>Quantity</td>
+      <td style="text-align: left">Quantidade do item colocado no carrinho.</td>
+    </tr>
+    <tr>
+      <td>Price</td>
+      <td style="text-align: left">Preço de venda final do produto (pode ser diferente do preço do SKU).</td>
+    </tr>
+    <tr>
+      <td>SKU</td>
+      <td style="text-align: left">Dados do SKU do produto.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div title="Item de Carrinho" class="language-json-doc highlighter-rouge"><pre class="highlight"><code><span class="c1">// -----------------------------------</span><span class="w">
+</span><span class="c1">// Exemplo do objeto Item de Carrinho</span><span class="w">
+</span><span class="c1">// -----------------------------------</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">920</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"IsActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"ProductId"</span><span class="p">:</span><span class="w"> </span><span class="mi">999999</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"ProductName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Produto de Teste"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"MerchantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"612a64c0-22e7-4fb9-aa2b-eb31670f207f"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"MerchantName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BlackBox Store"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Price"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">9000</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BRL"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"Sku"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9999</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Sku"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PROD9999"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Status"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Descrição do SKU"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Images"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"http://www.myimages.com/image1.png"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><a name="http_operations"></a></p>
+
+<h3 id="operações-http">Operações HTTP</h3>
+
+<p><code class="http-post highlighter-rouge">POST</code> <a href="#post_cartitem">/api/cart/{cartId}/items</a><br />
+Inclusão de item no carrinho.</p>
+
+<p><code class="http-put highlighter-rouge">PUT</code> <a href="#put_cartitem">/api/cart/{cartId}/items/{itemId}</a><br />
+Atualização dos dados de um item do carrinho.</p>
+
+<p><code class="http-delete highlighter-rouge">DELETE</code> <a href="#delete_cartitem">/api/cart/{cartId}/items/{itemId}</a><br />
+Remoção de item do carrinho.</p>
+
+<p><code class="http-get highlighter-rouge">GET</code> <a href="#getbyid_cartitem">/api/cart/{cartId}/items/{itemId}</a><br />
+Obtenção de item existente no carrinho através do seu Id.</p>
+
+<p><code class="http-get highlighter-rouge">GET</code> <a href="#get_cartitem">/api/cart/{cartId}/items/</a><br />
+Listagem dos itens existentes no carrinho.</p>
+
+<p><code class="http-get highlighter-rouge">GET</code> <a href="#get_active">/api/cart/{cartId}/active</a><br />
+Listagem dos itens ativos do carrinho.</p>
+
+<p><code class="http-get highlighter-rouge">GET</code> <a href="#get_saved">/api/cart/{cartId}/saved</a><br />
+Listagem dos itens salvos do carrinho.</p>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="post_cartitem"></a></p>
+
+<h3 id="post-apicartcartiditems"><strong>POST</strong> /api/cart/<em>{cartId}</em>/items</h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Inclusão de item no carrinho.</p>
+
+<p><strong>PARÂMETROS URL:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cartId</td>
+      <td style="text-align: left">Identificador do carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>PARÂMETROS JSON:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SkuId</td>
+      <td style="text-align: left">Identificador do SKU</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+    <tr>
+      <td>Quantity</td>
+      <td style="text-align: left">Quantidade do SKU a ser incluída no carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+    <tr>
+      <td>Price.Amount</td>
+      <td style="text-align: left">Preço do SKU no carrinho. Se não for informado, o preço já cadastrado no SKU é utilizado</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">POST</span> <span class="nn">/api/cart/{cartId}/items</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<div class="language-json-doc highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"SkuId"</span><span class="p">:</span><span class="w"> </span><span class="mi">999999</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="c1">// Price é opcional</span><span class="w">
+    </span><span class="c1">// Quando utilizado, substitui o preço cadastrado no SKU</span><span class="w">
+    </span><span class="nt">"Price"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"Amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">201</span> <span class="ne">Created</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">999999</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/cart/{cartId}/items/999999"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GET"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="put_cartitem"></a></p>
+
+<h3 id="put-apicartcartiditemsitemid"><strong>PUT</strong> /api/cart/<em>{cartId}</em>/items/<em>{itemId}</em></h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Atualização de item no carrinho.</p>
+
+<p><strong>PARÂMETROS URL:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cartId</td>
+      <td style="text-align: left">Identificador do carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+    <tr>
+      <td>itemId</td>
+      <td style="text-align: left">Identificador do item de carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>PARÂMETROS JSON:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Quantity</td>
+      <td style="text-align: left">Quantidade do SKU a ser incluída no carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">PUT</span> <span class="nn">/api/cart/{cartId}/items/{itemId}</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"Quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">999999</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/cart/{cartId}/items/999999"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GET"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="delete_cartitem"></a></p>
+
+<h3 id="delete-apicartcartiditemsitemid"><strong>DELETE</strong> /api/cart/<em>{cartId}</em>/items/<em>{itemId}</em></h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Remoção de item do carrinho.</p>
+
+<p><strong>PARÂMETROS URL:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cartId</td>
+      <td style="text-align: left">Identificador do carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+    <tr>
+      <td>itemId</td>
+      <td style="text-align: left">Identificador do item de carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">DELETE</span> <span class="nn">/api/cart/{cartId}/items/{itemId}</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"Links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"add"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/cart/{cartId}/items/"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"POST"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"cart"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/cart/{cartId}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GET"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"cart-items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/cart/{cartId}/items/"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GET"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="getbyid_cartitem"></a></p>
+
+<h3 id="get-apicartcartiditemsitemid"><strong>GET</strong> /api/cart/<em>{cartId}</em>/items/<em>{itemId}</em></h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Obtém um item existente no carrinho através do seu Id. O Id é gerado automaticamente quando o item é adicionado ao carrinho.</p>
+
+<p><strong>PARÂMETROS URL:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cartId</td>
+      <td style="text-align: left">Identificador do carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+    <tr>
+      <td>itemId</td>
+      <td style="text-align: left">Identificador do item de carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/api/cart/{cartId}/items/{itemId}</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+
+<div class="language-json-doc highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w"> 
+  </span><span class="c1">// objeto</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="get_cartitem"></a></p>
+
+<h3 id="get-apicartcartiditems"><strong>GET</strong> /api/cart/<em>{cartId}</em>/items</h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Lista os itens existentes no carrinho.</p>
+
+<p><strong>PARÂMETROS URL:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cartId</td>
+      <td style="text-align: left">Identificador do carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/api/cart/{cartId}/items</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="get_active"></a></p>
+
+<h3 id="get-apicartcartidactive"><strong>GET</strong> /api/cart/<em>{cartId}</em>/active</h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Listagem dos itens ativos do carrinho.</p>
+
+<p><strong>PARÂMETROS URL:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cartId</td>
+      <td style="text-align: left">Identificador do carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/api/cart/{cartId}/active</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="get_saved"></a></p>
+
+<h3 id="get-apicartcartidsaved"><strong>GET</strong> /api/cart/<em>{cartId}</em>/saved</h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Listagem dos itens salvos do carrinho.</p>
+
+<p><strong>PARÂMETROS URL:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cartId</td>
+      <td style="text-align: left">Identificador do carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/api/cart/{cartId}/saved</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<hr />
+
+			</article>
+			<div class="page-footer">
+				<span class="copyright">&copy; 2017 - Feito com <i class="material-icons copyright">favorite</i> pela <a class="copyright" href="http://www.braspag.com.br" style="font-weight: 400" target="_blank">Braspag</a></span>
+			</div>
+		</section>
+
+		<script>
+			document.getElementById("open-nav").addEventListener("click", function () {
+				document.body.classList.toggle("nav-open");
+			});
+		</script>
+	</body>
+</html>

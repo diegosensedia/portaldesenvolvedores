@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="http://localhost:4000/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.3.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-09-10T23:41:43-03:00</updated><id>http://localhost:4000/</id><title type="html">BlackBox API</title><subtitle>Documentação da plataforma BlackBox.</subtitle><author><name>{&quot;name&quot;=&gt;nil, &quot;email&quot;=&gt;nil, &quot;twitter&quot;=&gt;nil}</name></author><entry><title type="html">Release 2.12</title><link href="http://localhost:4000/2017/09/07/release.2.12/" rel="alternate" type="text/html" title="Release 2.12" /><published>2017-09-07T00:00:00-03:00</published><updated>2017-09-07T00:00:00-03:00</updated><id>http://localhost:4000/2017/09/07/release.2.12</id><content type="html" xml:base="http://localhost:4000/2017/09/07/release.2.12/">&lt;p&gt;&lt;strong&gt;Features:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Inclusão de remoção de produto (Product API)&lt;/li&gt;
+  &lt;li&gt;Inclusão de suporte para código de barras em SKU de produto (SKU API)&lt;/li&gt;
+  &lt;li&gt;Operação GET para obtenção de ofertas na API pública de carrinho (Public Cart API)&lt;/li&gt;
+  &lt;li&gt;Suporte para filtro por label na operação GET de carrinho (Cart API)&lt;/li&gt;
+  &lt;li&gt;Inclusão de suporte para captura de pedidos&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Ajustes e Correções:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Correção de problema na inclusão de item no carrinho quando ACL do consumidor não é vazia&lt;/li&gt;
+  &lt;li&gt;Retorno do nome da loja na operação GET (Order API)&lt;/li&gt;
+  &lt;li&gt;Mudança na propriedade Product.State &amp;gt; Product.Status&lt;/li&gt;
+  &lt;li&gt;Eliminação da propriedade Product.Ncm&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>{&quot;name&quot;=&gt;nil, &quot;email&quot;=&gt;nil, &quot;twitter&quot;=&gt;nil}</name></author><summary type="html">Features:</summary></entry><entry><title type="html">Release 2.11</title><link href="http://localhost:4000/2017/08/17/release.2.11/" rel="alternate" type="text/html" title="Release 2.11" /><published>2017-08-17T00:00:00-03:00</published><updated>2017-08-17T00:00:00-03:00</updated><id>http://localhost:4000/2017/08/17/release.2.11</id><content type="html" xml:base="http://localhost:4000/2017/08/17/release.2.11/">&lt;p&gt;&lt;strong&gt;Features:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Suporte para filtro de status na operação GET (Product API)&lt;/li&gt;
+  &lt;li&gt;Inclusão de remoção de SKU (SKU API)&lt;/li&gt;
+  &lt;li&gt;Inclusão da confirmação de pedido do lojista (Order API)&lt;/li&gt;
+  &lt;li&gt;Inclusão de log de atividades&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Ajustes e Correções:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Correção de problema na conversão da data UTC utilizada nos filtros por data de criação (Product API, Cart API, Order API)&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>{&quot;name&quot;=&gt;nil, &quot;email&quot;=&gt;nil, &quot;twitter&quot;=&gt;nil}</name></author><summary type="html">Features:</summary></entry></feed>

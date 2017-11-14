@@ -1,0 +1,604 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="Jekyll v3.3.1">
+		
+		<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" href="/touch-icon.png" sizes="192x192">
+		<!-- <link rel="icon" type="image/png" href="/images/favicon.png"> -->
+		<link rel="icon" type="image/svg+xml" href="/images/squares.svg">
+
+		<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="BlackBox API" />
+		<!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>Cart API - BlackBox API</title>
+<meta property="og:title" content="Cart API" />
+<meta name="description" content="O carrinho de compras permite ao usuário adicionar os itens desejados em uma compra, e é composto por uma coleção de itens de carrinho." />
+<meta property="og:description" content="O carrinho de compras permite ao usuário adicionar os itens desejados em uma compra, e é composto por uma coleção de itens de carrinho." />
+<link rel="canonical" href="http://localhost:4000/cart/cart/" />
+<meta property="og:url" content="http://localhost:4000/cart/cart/" />
+<meta property="og:site_name" content="BlackBox API" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-09-10T23:41:43-03:00" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Cart API",
+    "datePublished": "2017-09-10T23:41:43-03:00",
+    "description": "O carrinho de compras permite ao usuário adicionar os itens desejados em uma compra, e é composto por uma coleção de itens de carrinho.",
+    "logo": "http://localhost:4000/siteicon.png",
+    "url": "http://localhost:4000/cart/cart/"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+
+		
+	</head>
+
+	<body>
+		<header>
+			<h1>
+				<a href="/" class="header-link">BlackBox API</a>	
+				<button type="button" class="open-nav" id="open-nav"></button>
+			</h1>
+
+			<form action="/search/" method="get">
+				<input type="text" name="q" id="search-input" placeholder="Buscar" autofocus>
+				<input type="submit" value="Buscar" style="display: none;">
+			</form>
+
+			<nav class="full-navigation">
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/">Visão Geral</a>
+					</li>
+				</ul>
+
+				<ul>
+					
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/auth/oauth/">Autenticação</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/auth/oauth/">Tokens de Acesso</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level current">
+							
+							<a href="/cart/cart/">Carrinho de Compras</a>
+							<ul>
+								
+									<li class="nav-item current"><a href="/cart/cart/">Cart API</a></li>
+								
+									<li class="nav-item "><a href="/cart/cartitem/">Cart Item API</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/catalog/product/">Catálogo de Produtos</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/catalog/product/">Product API</a></li>
+								
+									<li class="nav-item "><a href="/catalog/sku/">SKU API</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/order/order/">Pedidos</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/order/order/">Order API</a></li>
+								
+							</ul>
+						</li>
+					
+				</ul>
+
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/changelog/">Releases</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<section class="main">
+			<div class="page-header">
+				<!-- <h2>Carrinho de Compras</h2> -->
+				<a name="title"></a>
+				<h3>Cart API</h3>
+			</div>
+			<article class="content">
+				<p>O carrinho de compras permite ao usuário adicionar os itens desejados em uma compra, e é composto por uma coleção de itens de carrinho.</p>
+
+<p>Um <a href="/cart/cartitem/">item de carrinho</a> agrega as informações do SKU, sua quantidade, preço e o método de envio.</p>
+
+<p><a name="attributes"></a></p>
+
+<h3 id="propriedades-do-objeto">Propriedades do Objeto</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Id</td>
+      <td style="text-align: left">Identificador único do carrinho (gerado automaticamente).</td>
+    </tr>
+    <tr>
+      <td>CreatedOn</td>
+      <td style="text-align: left">Data da criação.</td>
+    </tr>
+    <tr>
+      <td>UpdatedOn</td>
+      <td style="text-align: left">Data da última atualização.</td>
+    </tr>
+    <tr>
+      <td>UserId</td>
+      <td style="text-align: left">Identificador do usuário proprietário do carrinho.</td>
+    </tr>
+    <tr>
+      <td>Type</td>
+      <td style="text-align: left">Tipo do carrinho. Valores possíveis são: 0 (privado), 1 (público) e 2 (oferta do vendedor).</td>
+    </tr>
+    <tr>
+      <td>MerchantId</td>
+      <td style="text-align: left">Identificador da loja. Só é utilizado quando o tipo de carrinho for uma oferta do vendedor (Type = 2).</td>
+    </tr>
+    <tr>
+      <td>Label</td>
+      <td style="text-align: left">Nome do carrinho.</td>
+    </tr>
+    <tr>
+      <td>CouponCode</td>
+      <td style="text-align: left">Código de cupom de desconto.</td>
+    </tr>
+    <tr>
+      <td>CartItems</td>
+      <td style="text-align: left">Coleção de Itens de Carrinho.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div title="Carrinho de Compras" class="language-json-doc highlighter-rouge"><pre class="highlight"><code><span class="c1">// --------------------------------------</span><span class="w">
+</span><span class="c1">// Exemplo do objeto Carrinho de Compras</span><span class="w">
+</span><span class="c1">// --------------------------------------</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">999</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"CreatedOn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-02-11T14:10:39.1083643"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"UpdatedOn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-02-11T14:10:39.442996"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"UserId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7a6acd59-a7b1-4a7f-bc2d-0a3f6014cc4a"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Type"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"MerchantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"99999999-9999-9999-9999-999999999999"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"MerchantName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BlackBox Store"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Exemplo de carrinho Oferta"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"CartItems"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"IsActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ProductId"</span><span class="p">:</span><span class="w"> </span><span class="mi">9999</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ProductName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Nome do produto"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ManufacturerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Retail Company Inc."</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"Caption"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Uma breve descrição do produto"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"MerchantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"99999999-9999-9999-9999-999999999999"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"MerchantName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BlackBox Store"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"Quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"Price"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"Amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"Currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BRL"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"Sku"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">332</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"Sku"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SKU332"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"Status"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"Description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Descrição do SKU de Produto"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"Images"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"https://www.myimages.com/image1.png"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"https://www.myimages.com/image2.png"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"https://www.myimages.com/image3.png"</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+        </span><span class="nt">"Shipping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"Type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"Price"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"Amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BRL"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><a name="http_operations"></a></p>
+
+<h3 id="operações-http">Operações HTTP</h3>
+
+<p><code class="http-post highlighter-rouge">POST</code> <a href="#post_cart">/api/cart</a><br />
+Criação de um novo carrinho.</p>
+
+<p><code class="http-put highlighter-rouge">PUT</code> <a href="#put_cart">/api/cart/{cartId}</a><br />
+Atualização do carrinho existente.</p>
+
+<p><code class="http-get highlighter-rouge">GET</code> <a href="#getbyid_cart">/api/cart/{cartId}</a><br />
+Obtenção de um carrinho existente através do seu Id.</p>
+
+<p><code class="http-get highlighter-rouge">GET</code> <a href="#get_cart">/api/cart</a><br />
+Consulta dos carrinhos existentes.</p>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="post_cart"></a></p>
+
+<h3 id="post-apicart"><strong>POST</strong> /api/cart/</h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Criação de um novo carrinho de compras.</p>
+
+<p><strong>PARÂMETROS JSON:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Type</td>
+      <td style="text-align: left">Tipo do carrinho: 0 (privado), 1 (público) e 2 (oferta do vendedor)</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+    <tr>
+      <td>Label</td>
+      <td style="text-align: left">Nome do carrinho de compras</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">128</code></td>
+    </tr>
+    <tr>
+      <td>MerchantId</td>
+      <td style="text-align: left">Identificador da loja. Obrigatório quando tipo do carrinho for uma oferta de vendedor (Type = 2), opcional caso contrário</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">36</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>CouponCode</td>
+      <td style="text-align: left">Código de cupom de desconto</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">36</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>CartItems</td>
+      <td style="text-align: left">Array de objetos representando itens existentes no carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Object</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">POST</span> <span class="nn">/api/cart/</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<div class="language-json-doc highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"Type"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="c1">// Carrinho privado</span><span class="w">
+  </span><span class="nt">"Label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Meu Carrinho de Compras"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"CouponCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PROMOCODE"</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"CartItems"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+    </span><span class="nt">"SkuId"</span><span class="p">:</span><span class="w"> </span><span class="mi">9999</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+   </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">201</span> <span class="ne">Created</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">999</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/cart/999"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GET"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="put_cart"></a></p>
+
+<h3 id="put-apicartcartid"><strong>PUT</strong> /api/cart/<em>{cartId}</em></h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Atualiza os atributos de um carrinho existente.</p>
+
+<p><strong>PARÂMETROS URL:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cartId</td>
+      <td style="text-align: left">Identificador do carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>PARÂMETROS JSON:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Type</td>
+      <td style="text-align: left">Tipo do carrinho: 0 (privado), 1 (público) e 2 (oferta do vendedor)</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+    <tr>
+      <td>Label</td>
+      <td style="text-align: left">Nome do carrinho de compras</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">128</code></td>
+    </tr>
+    <tr>
+      <td>MerchantId</td>
+      <td style="text-align: left">Identificador da loja. Obrigatório quando tipo do carrinho for uma oferta de vendedor (Type = 2), opcional caso contrário</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">36</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>CouponCode</td>
+      <td style="text-align: left">Código de cupom de desconto</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">36</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">PUT</span> <span class="nn">/api/cart/{cartId}</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"Type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Meu novo Carrinho de Compras"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9999</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/product/9999"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GET"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="getbyid_cart"></a></p>
+
+<h3 id="get-apicartcartid"><strong>GET</strong> /api/cart/<em>{cartId}</em></h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Obtém um carrinho existente através do seu Id. O Id é gerado automaticamente quando o carrinho é criado.</p>
+
+<p><strong>PARÂMETROS URL:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cartId</td>
+      <td style="text-align: left">Identificador do carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/api/cart/{cartId}</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+
+<div class="language-json-doc highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w"> 
+  </span><span class="c1">// objeto</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<p><a name="get_cart"></a></p>
+
+<h3 id="get-apicart"><strong>GET</strong> /api/cart/</h3>
+
+<p><strong>DESCRIÇÃO:</strong><br />
+Lista os carrinhos de compras existentes. Permite a aplicação de diversos filtros de pesquisa para maior controle sobre os resultados obtidos.</p>
+
+<p><strong>PARÂMETROS URL:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: left">Descrição</th>
+      <th style="text-align: right"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>pageIndex</td>
+      <td style="text-align: left">Índice para paginação (default: 1)</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>pageSize</td>
+      <td style="text-align: left">Quantidade de registros retornados (default: 25)</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Number</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>cartType</td>
+      <td style="text-align: left">Filtro para tipo de carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">Array[Number]</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>merchantId</td>
+      <td style="text-align: left">Filtro para Identificador de loja</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>order</td>
+      <td style="text-align: left">Ordenação ascendente (asc) ou descentende (desc) dos registros retornados (default: asc)</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>label</td>
+      <td style="text-align: left">Filtro por nome do carrinho</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>startDate</td>
+      <td style="text-align: left">Filtro por data inicial no formato “dd-MM-yyyy”</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+    <tr>
+      <td>endDate</td>
+      <td style="text-align: left">Filtro por data final no formato “dd-MM-yyyy”</td>
+      <td style="text-align: right"><code class="highlighter-rouge">String</code> <code class="highlighter-rouge">opcional</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>REQUEST:</strong></p>
+
+<p>Sem parâmetros de consulta:</p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/api/cart/</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<p>Com parâmetros de consulta:</p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/api/cart/?pageIndex=1&amp;pageSize=25&amp;cartType=0&amp;label=keyword&amp;merchantId=99999999-9999-9999-9999-999999999999&amp;order=desc&amp;startDate=01-06-2017&amp;endDate=10-06-2017</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+</div>
+
+<p><strong>RESPONSE:</strong></p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+</code></pre>
+</div>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"Total"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"PageSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"PageIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p style="text-align: right;">
+  <a href="#title"><i class="material-icons">expand_less</i></a>
+</p>
+
+<hr />
+
+			</article>
+			<div class="page-footer">
+				<span class="copyright">&copy; 2017 - Feito com <i class="material-icons copyright">favorite</i> pela <a class="copyright" href="http://www.braspag.com.br" style="font-weight: 400" target="_blank">Braspag</a></span>
+			</div>
+		</section>
+
+		<script>
+			document.getElementById("open-nav").addEventListener("click", function () {
+				document.body.classList.toggle("nav-open");
+			});
+		</script>
+	</body>
+</html>
