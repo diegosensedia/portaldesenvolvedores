@@ -1,0 +1,17 @@
+global:
+  tagline: Português
+  github:  GitHub
+  contact: Contato
+  languages: Idiomas
+  support: Ajuda
+  toggle_code: Comutar
+  toggle_right: Comutar
+  toggle_left: Comutar
+  sidebar: a coluna da esquerda
+  darkbox: a coluna da direita
+  complementary: Materiais complementares
+  search: Busca
+  home: Início
+langs:
+  en: English
+  pt: Português

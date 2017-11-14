@@ -1,0 +1,17 @@
+global:
+  tagline: English
+  github: GitHub
+  contact: Contact
+  languages: Languages
+  support: Help
+  toggle_code: Toggle
+  toggle_right: Toggle
+  toggle_left: Toggle
+  sidebar: left column
+  darkbox: right column
+  complementary: Complementary materials
+  search: Search
+  home: Home
+langs:
+  en: English
+  pt: Português
